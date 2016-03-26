@@ -1,0 +1,22 @@
+---
+
+- name: Create database
+  mysql_db:
+    name: "{{ mysqldb_name }}"
+    state: present
+    login_host: 127.0.0.1
+    login_user: root
+    login_password: "{{ mysqldb_login_password }}"
+  delegate_to: "{{ mysqldb_login_host }}"
+
+- name: Create user
+  mysql_user:
+    name: "{{ mysqldb_user }}"
+    password: "{{ mysqldb_password }}"
+    host: "{{ mysqldb_host }}"
+    priv: "{{ mysqldb_name }}.*:ALL"
+    state: present
+    login_host: 127.0.0.1
+    login_user: root
+    login_password: "{{ mysqldb_login_password }}"
+  delegate_to: "{{ mysqldb_login_host }}"
